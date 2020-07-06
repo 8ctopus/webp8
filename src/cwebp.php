@@ -11,6 +11,7 @@ namespace octopus;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
 use octopus\HtmlOutputHandler;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -353,7 +354,13 @@ class log
 
         self::$log = new Logger('cwebp');
         self::$log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
-        self::$log->pushHandler(new HtmlOutputHandler(Logger::DEBUG));
+
+        $handler = new HtmlOutputHandler(Logger::DEBUG);
+
+        $formatter = new LineFormatter("[%datetime%] %level_name% %message%\n");
+        $handler->setFormatter($formatter);
+
+        self::$log->pushHandler($handler);
     }
 
     private static $log = null;
