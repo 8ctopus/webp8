@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace cwebp;
+namespace octopus;
 
-use cwebp\HtmlHandler;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use octopus\HtmlOutputHandler;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -353,7 +353,7 @@ class log
 
         self::$log = new Logger('cwebp');
         self::$log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
-        self::$log->pushHandler(new HtmlHandler(Logger::DEBUG));
+        self::$log->pushHandler(new HtmlOutputHandler(Logger::DEBUG));
     }
 
     private static $log = null;

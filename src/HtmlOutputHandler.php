@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace cwebp;
+namespace octopus;
 
 use Monolog\Handler\AbstractProcessingHandler;
 
-class HtmlHandler extends AbstractProcessingHandler
+class HtmlOutputHandler extends AbstractProcessingHandler
 {
     function __construct()
     {
