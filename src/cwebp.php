@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace cwebp;
 
+use cwebp\HtmlHandler;
 use Monolog\Logger;
-use Monolog\Handler\BrowserConsoleHandler;
+use Monolog\Handler\StreamHandler;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -351,7 +352,8 @@ class log
             return;
 
         self::$log = new Logger('cwebp');
-        self::$log->pushHandler(new BrowserConsoleHandler(Logger::DEBUG));
+        self::$log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+        self::$log->pushHandler(new HtmlHandler(Logger::DEBUG));
     }
 
     private static $log = null;
