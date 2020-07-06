@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  web:
+    image: 8ct8pus/apache-php-fpm-alpine:latest
+    container_name: webp
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - DOMAIN=localhost
+      - DOCUMENT_ROOT=/
+    volumes:
+      # development directory
+      - ./src/:/var/www/site/
+      # expose apache logs to host
+      - ./log/:/var/log/apache2/
+      # expose apache and php config to host
+      - ./etc/:/docker/etc/
+      # expose ssl certificates to host
+      - ./ssl/:/etc/ssl/apache2/
