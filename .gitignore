@@ -4,4 +4,6 @@
 
 /vendor/
 
+*.webp
+
 /*.sublime-workspace
