@@ -1,35 +1,47 @@
 <?php
 
+/**
+ * 8ctopus' cwebp
+ * @author 8ctopus <hello@octopuslabs.io>
+ */
+
 declare(strict_types=1);
 
 namespace cwebp;
 
-// log time
-$time = hrtime(true);
+use Monolog\Logger;
+use Monolog\Handler\BrowserConsoleHandler;
 
-// debug
-cwebp::set_debug(true);
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// log time
+$timer = new timer(true);
+
+// create logger
+log::init();
 
 // log script max execution time
-log::log(ini_get('max_execution_time'));
+log::debug('php max execution time - '. ini_get('max_execution_time'));
 
 // check that cwebp is installed
 if (cwebp::installed())
-    log::log('cwebp installed - OK');
+    log::notice('cwebp installed - OK');
 else
-    log::log('cwebp installed - FAILED');
+    log::error('cwebp installed - FAILED - install webp package');
 
 // list images to convert
 $dir   = 'images';
 $files = [];
 
 if (!cwebp::list_images($dir, $files)) {
-    log::log('List images - FAILED');
+    log::error('List images - FAILED');
     exit();
 }
 
+log::notice('List images - OK - count - '. count($files));
+
 // convert images
-log::log('Convert images... - count - '. count($files));
+log::debug('Convert images...');
 
 foreach ($files as $file) {
     // check if image was already converted
@@ -38,26 +50,25 @@ foreach ($files as $file) {
         $src_modified  = filemtime($file);
         $dest_modified = filemtime($file .'.webp');
 
-        // if non webp image was modified after webp, it means the image was updated and therefore needs to be converted again
-        if ($src_modified > $dest_modified) {
-            log::log('Convert image - SKIPPED - '. $file);
+        // if source image was modified after webp, it means the image was updated and therefore needs to be converted again
+        if ($src_modified < $dest_modified) {
+            log::debug('Convert image - SKIPPED - '. $file);
             continue;
         }
     }
 
-    // convert single image
+    // convert single image to webp
     if (cwebp::convert_image($file))
-        log::log('Convert image - OK - '. $file);
+        log::debug('Convert image - OK - '. $file);
     else
-        log::log('Convert image - FAILED - '. $file);
+        log::error('Convert image - FAILED - '. $file);
 }
 
-log::log('Convert images - OK');
+log::debug('Convert images - OK');
 
 cwebp::stats();
 
-$delta_time = round((hrtime(true) - $time) / 1e+6, 0);
-log::log("total time - {$delta_time}ms");
+log::debug('script execution time - '. $timer->elapsed() .'ms');
 
 class cwebp
 {
@@ -103,12 +114,11 @@ class cwebp
             $dest = "{$src}.webp";
 
         // create command
-        $command = "cwebp '{$src}' -o '{$dest}'";
+        // https://developers.google.com/speed/webp/docs/cwebp
+        $command = "cwebp '{$src}' -o '{$dest}' -quiet -m 6";
 
-        if (self::$debug) {
-            $time = hrtime(true);
-            log::log($command);
-        }
+        $time = hrtime(true);
+        log::debug($command);
 
         // convert image
         exec($command, $output, $status);
@@ -130,7 +140,7 @@ class cwebp
 
         if ($delta > 0) {
             // TODO - delete image?
-            log::log('webp image bigger than source');
+            log::notice('webp image bigger than source');
         }
 
         $delta_time = hrtime(true) - $time;
@@ -139,25 +149,13 @@ class cwebp
 
         self::$stat_time += $delta_time;
 
-        if (self::$debug) {
-            $src_size  = self::format_size($src_size, 0);
-            $dest_size = self::format_size($dest_size, 0);
-            $delta     = self::format_size($delta, 0);
+        $src_size  = self::format_size($src_size, 0);
+        $dest_size = self::format_size($dest_size, 0);
+        $delta     = self::format_size($delta, 0);
 
-            log::log("delta - $delta_per% / $delta - ${delta_time}ms - src size - ${src_size} - dest size - ${dest_size}");
-        }
+        log::debug("delta - $delta_per% / $delta - ${delta_time}ms - src size - ${src_size} - dest size - ${dest_size}");
 
         return true;
-    }
-
-    /**
-     * Set debug
-     * @param bool $value
-     * @return void
-     */
-    public static function set_debug(bool $value): void
-    {
-        self::$debug = $value;
     }
 
     /**
@@ -174,8 +172,8 @@ class cwebp
         $stat_dest_size = self::format_size(self::$stat_dest_size, 0);
         $stat_time      = self::$stat_time;
 
-        log::log("delta size - {$delta} - src size - {$stat_src_size} - dest size - {$stat_dest_size}");
-        log::log("total time - {$stat_time}ms");
+        log::notice("delta size - {$delta} - src size - {$stat_src_size} - dest size - {$stat_dest_size}");
+        log::notice("total time - {$stat_time}ms");
     }
 
     private static $images_ext = [
@@ -183,8 +181,6 @@ class cwebp
         'jpeg',
         'png',
     ];
-
-    private static $debug     = false;
 
     private static $stat_src_size  = 0;
     private static $stat_dest_size = 0;
@@ -283,23 +279,77 @@ class cwebp
     }
 }
 
+class timer
+{
+    /**
+     * Constructor
+     * @param bool $start start timer immediately or not
+     */
+    public function __construct(bool $start)
+    {
+        $time_start = null;
+
+        if ($start)
+            $this->start();
+    }
+
+    /**
+     * Start timer
+     * @return void
+     */
+    public function start(): void
+    {
+        $this->time_start = hrtime(true);
+    }
+
+    /**
+     * Get elapsed time
+     * @return string
+     */
+    public function elapsed(): string
+    {
+        return sprintf('%.0f', (hrtime(true) - $this->time_start) / 1e+6);
+    }
+
+    private $time_start;
+}
+
 class log
 {
-    private static $init = false;
-
-    public static function log(string $line): void
+    public static function debug(string $line): void
     {
-        if (!self::$init) {
-            self::$init = true;
-            echo('<pre>'. PHP_EOL);
-        }
-
-        echo($line . PHP_EOL);
+        self::$log->debug($line);
     }
 
-    public static function line(): void
+    public static function notice(string $line): void
     {
-        self::log('');
+        self::$log->notice($line);
     }
+
+    public static function warning(string $line): void
+    {
+        self::$log->error($line);
+    }
+
+    public static function error(string $line): void
+    {
+        self::$log->error($line);
+    }
+
+    public static function critical(string $line): void
+    {
+        self::$log->critical($line);
+    }
+
+    public static function init(): void
+    {
+        if (self::$log)
+            return;
+
+        self::$log = new Logger('cwebp');
+        self::$log->pushHandler(new BrowserConsoleHandler(Logger::DEBUG));
+    }
+
+    private static $log = null;
 }
 
