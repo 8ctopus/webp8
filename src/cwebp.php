@@ -26,11 +26,15 @@ log::debug('php max execution time - '. ini_get('max_execution_time'));
 // check that cwebp is installed
 if (cwebp::installed())
     log::notice('cwebp installed - OK');
-else
-    log::error('cwebp installed - FAILED - install webp package');
+else {
+    log::error('cwebp installed - FAILED - webp package missing');
+    log::notice('docker exec -it webp zsh');
+    log::notice('apk add libwebp-tools');
+    exit();
+}
 
 // list images to convert
-$dir   = 'images';
+$dir   = '../images';
 $files = [];
 
 if (!cwebp::list_images($dir, $files)) {
