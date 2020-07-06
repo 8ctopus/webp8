@@ -1,0 +1,7 @@
+/etc/
+/log/
+/ssl/
+
+/vendor/
+
+/*.sublime-workspace
