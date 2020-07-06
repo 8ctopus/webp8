@@ -9,10 +9,10 @@ services:
       - 443:443
     environment:
       - DOMAIN=localhost
-      - DOCUMENT_ROOT=/
+      - DOCUMENT_ROOT=/src
     volumes:
       # development directory
-      - ./src/:/var/www/site/
+      - ./:/var/www/site/
       # expose nginx logs to host
       - ./log/:/var/log/nginx/
       # expose nginx and php config to host
