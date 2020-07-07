@@ -54,7 +54,7 @@ class NewCommand extends Command
         else {
             $io->error([
                 'cwebp command is missing',
-                'ubuntu: apt install cwebp',
+                'ubuntu: apt install webp',
                 'alpine: apk add libwebp-tools'
             ]);
             exit();
