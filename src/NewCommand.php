@@ -61,7 +61,7 @@ class NewCommand extends Command
         }
 
         // list images to convert
-        $dir   = 'images';
+        $dir   = $input->getArgument('directory');
         $files = [];
 
         if (!Helper::list_images($dir, $files)) {
