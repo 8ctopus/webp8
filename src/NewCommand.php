@@ -50,7 +50,7 @@ class NewCommand extends Command
 
         // check that cwebp is installed
         if (Webp::installed())
-            $io->writeln('cwebp command found');
+            $io->writeln('<info>cwebp command found</info>');
         else {
             $io->error([
                 'cwebp command is missing',
