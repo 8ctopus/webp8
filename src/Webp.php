@@ -55,9 +55,9 @@ class Webp
         $delta     = $dest_size - $src_size;
         $delta_per = round($delta * 100 / $src_size, 0);
 
-        if ($delta < 0) {
+        if ($delta > 0) {
             // TODO - delete image?
-            self::log('webp image bigger than source');
+            self::log('<comment>webp image bigger than source</comment>');
         }
 
         $delta_time = hrtime(true) - $time;
