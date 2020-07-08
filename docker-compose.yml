@@ -3,7 +3,7 @@ version: '3.7'
 services:
   web:
     image: 8ct8pus/nginx-php-fpm-alpine:latest
-    container_name: webp
+    container_name: webp8
     ports:
       - 80:80
       - 443:443
