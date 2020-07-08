@@ -9,7 +9,6 @@
         }
     ],
     "require": {
-        "monolog/monolog": "^2.1",
         "symfony/console": "^5.0",
         "symfony/stopwatch": "^5.1"
     },
