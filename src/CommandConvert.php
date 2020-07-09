@@ -95,7 +95,7 @@ class CommandConvert extends Command
             }
 
             // convert single image to webp
-            if (self::convert_image($file, $stats))
+            if (self::convert($file, $stats))
                 $this->io->writeln('Image converted - '. $file, OutputInterface::VERBOSITY_VERBOSE);
             else
                 $this->io->error('Convert image - '. $file);
@@ -133,7 +133,7 @@ class CommandConvert extends Command
      * @param  string $dest
      * @return bool true on success, otherwise false
      */
-    private function convert_image(string $src, array $stats, string $dest = ''): bool
+    private function convert(string $src, array $stats, string $dest = ''): bool
     {
         // create destination file
         if (empty($dest))
