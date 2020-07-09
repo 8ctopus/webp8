@@ -12,6 +12,9 @@ class Helper
      */
     public static function list_dir(string $dir, array& $files): bool
     {
+        if (!file_exists($dir))
+            return false;
+
         // list directory
         $list = scandir($dir);
 
