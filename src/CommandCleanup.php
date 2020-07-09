@@ -39,10 +39,6 @@ class CommandCleanup extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        // log performance
-        $stopwatch = new Stopwatch();
-        $stopwatch->start('main');
-
         // list images to delete
         $dir   = $input->getArgument('directory');
         $files = [];
@@ -61,12 +57,13 @@ class CommandCleanup extends Command
         }
 
         // delete images
-        $io->writeln('<info>Delete images... - '. count($files) .'</info>');
+        $io->writeln('Delete images... - '. count($files), OutputInterface::VERBOSITY_VERBOSE);
 
         // ask user confirmation if not dry run
         if (!$input->getOption('dry-run') && !$io->confirm('Cleanup directory?', false)) {
             $io->warning('Abort');
-            exit();
+
+            return 0;
         }
 
         foreach ($files as $file) {
@@ -74,14 +71,11 @@ class CommandCleanup extends Command
                 // delete file
                 unlink($file);
 
-            $io->writeln("Deleted {$file}");
+            $io->writeln("Deleted {$file}", OutputInterface::VERBOSITY_VERBOSE);
         }
 
-        // check performance
-        $event = $stopwatch->stop('main');
-
         // log success
-        $io->success($event);
+        $io->success('');
 
         return 0;
     }
