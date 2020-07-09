@@ -1,13 +1,15 @@
-# webp8
-
-command line tool to convert images to webp format
+web8p is a command line tool to convert images to webp format
 
 # usage
 
 ## convert images to webp
 
-    ./webp8 convert [-v] directory
+    php webp8.phar convert [-v] directory
 
 ## delete existing webp images
 
-    ./webp8 cleanup [--dry-run] [-v] directory
+    php webp8.phar cleanup [--dry-run] [-v] directory
+
+# build phar
+
+    php src/Compiler.php
