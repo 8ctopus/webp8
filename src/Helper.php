@@ -125,4 +125,21 @@ class Helper
 
         return $neg ? '-'. $result : $result;
     }
+
+    /**
+     * Format milliseconds to time string
+     * @param  float $ms
+     * @return string
+     */
+    public static function format_time(float $ms): string
+    {
+        // convert milliseconds to seconds
+        $seconds = floor($ms / 1000);
+
+        $secs  = floor($seconds % 60);
+        $mins  = floor($seconds / 60 % 60);
+        $hours = floor($seconds / 3600);
+
+        return sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+    }
 }

@@ -6,6 +6,7 @@
 
 namespace Oct8pus\Webp;
 
+use Oct8pus\Webp\Helper;
 use Oct8pus\Webp\Webp;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -95,11 +96,32 @@ class CommandConvert extends Command
                 $io->error('Convert image - '. $file);
         }
 
-        // print stats
-        Webp::stats();
-
         // check performance
         $event = $stopwatch->stop('main');
+
+        // get stats
+        Webp::stats($size_src, $size_dest, $time);
+
+        // calculate stats
+        $delta = $size_dest - $size_src;
+
+        $delta = Helper::format_size($delta, 1);
+
+        $size_src  = Helper::format_size($size_src, 1);
+        $size_dest = Helper::format_size($size_dest, 1);
+
+        $time = Helper::format_time($time);
+
+        // create table
+        $io->newLine();
+
+        $io->table([
+            'Size original', 'Size webp', 'time'
+        ], [
+            [
+                $size_src, $size_dest, $time
+            ],
+        ]);
 
         // log success
         $io->success($event);

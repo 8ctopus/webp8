@@ -76,21 +76,17 @@ class Webp
     }
 
     /**
-     * Print stats
+     * Get stats
+     * @param [out] $src_size
+     * @param [out] $dest_size
+     * @param [out] $time
      * @return void
      */
-    public static function stats(): void
+    public static function stats(&$src_size, &$dest_size, &$time): void
     {
-        $delta = self::$stat_dest_size - self::$stat_src_size;
-
-        $delta = Helper::format_size($delta, 0);
-
-        $stat_src_size  = Helper::format_size(self::$stat_src_size, 0);
-        $stat_dest_size = Helper::format_size(self::$stat_dest_size, 0);
-        $stat_time      = self::$stat_time;
-
-        self::log("delta size - {$delta} - src size - {$stat_src_size} - dest size - {$stat_dest_size}");
-        self::log("total time - {$stat_time}ms");
+        $src_size  = self::$stat_src_size;
+        $dest_size = self::$stat_dest_size;
+        $time      = self::$stat_time;
     }
 
     /**
