@@ -7,6 +7,6 @@ else
     require(__DIR__ .'/vendor/autoload.php');
 
 $app = new Symfony\Component\Console\Application('webp8', '0.0.1');
-$app->add(new Oct8pus\Webp\NewCommand());
+$app->add(new Oct8pus\Webp\CommandConvert());
 
 $app->run();
