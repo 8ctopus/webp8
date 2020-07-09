@@ -159,12 +159,13 @@ class CommandConvert extends Command
         $size_src  = filesize($src);
         $size_dest = filesize($dest);
 
-        $delta = $size_dest - $size_src;
+        $delta     = $size_dest - $size_src;
         $delta_per = round($delta * 100 / $size_src, 0);
 
         if ($delta > 0) {
-            // TODO - delete image?
-            $this->io->writeln('<comment>webp image bigger than source</comment>', OutputInterface::VERBOSITY_NORMAL);
+            // delete file
+            unlink($dest);
+            $this->io->writeln("<comment>webp image bigger than source - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_NORMAL);
         }
         else {
             // save sizes
