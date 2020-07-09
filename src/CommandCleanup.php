@@ -39,7 +39,7 @@ class CommandCleanup extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        // log time
+        // log performance
         $stopwatch = new Stopwatch();
         $stopwatch->start('main');
 
@@ -49,13 +49,15 @@ class CommandCleanup extends Command
 
         if (!Helper::list_dir_ext($dir, Helper::$ext_webp, $files)) {
             $io->error('List images');
-            exit();
+
+            return 1;
         }
 
         // check if any images to delete
         if (!count($files)) {
             $io->warning('Nothing to cleanup');
-            exit();
+
+            return 0;
         }
 
         // delete images
@@ -75,11 +77,11 @@ class CommandCleanup extends Command
             $io->writeln("Deleted {$file}");
         }
 
-        $io->success('Cleanup');
-
-        // log performance
+        // check performance
         $event = $stopwatch->stop('main');
-        $io->writeln($event);
+
+        // log success
+        $io->success($event);
 
         return 0;
     }

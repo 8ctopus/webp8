@@ -40,23 +40,25 @@ class CommandConvert extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        // log time
+        // log performance
         $stopwatch = new Stopwatch();
         $stopwatch->start('main');
 
         // log script max execution time
-        $io->writeln('php max execution time - '. ini_get('max_execution_time'));
+        //$io->writeln('php max execution time - '. ini_get('max_execution_time'));
 
         // check that cwebp is installed
-        if (Webp::installed())
-            $io->writeln('<info>cwebp command found</info>');
+        if (Webp::installed()) {
+            //$io->writeln('<info>cwebp command found</info>');
+        }
         else {
             $io->error([
                 'cwebp command is missing',
                 'ubuntu: apt install webp',
                 'alpine: apk add libwebp-tools'
             ]);
-            exit();
+
+            return 127;
         }
 
         // list images to convert
@@ -65,7 +67,8 @@ class CommandConvert extends Command
 
         if (!Helper::list_dir_ext($dir, Helper::$ext_jpg_png, $files)) {
             $io->error('List images');
-            exit();
+
+            return 1;
         }
 
         // convert images
@@ -92,14 +95,14 @@ class CommandConvert extends Command
                 $io->error('Convert image - '. $file);
         }
 
-        $io->success('Convert images');
-
         // print stats
         Webp::stats();
 
-        // log performance
+        // check performance
         $event = $stopwatch->stop('main');
-        $io->writeln($event);
+
+        // log success
+        $io->success($event);
 
         return 0;
     }
