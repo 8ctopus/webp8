@@ -8,5 +8,6 @@ else
 
 $app = new Symfony\Component\Console\Application('webp8', '0.0.1');
 $app->add(new Oct8pus\Webp\CommandConvert());
+$app->add(new Oct8pus\Webp\CommandCleanup());
 
 $app->run();

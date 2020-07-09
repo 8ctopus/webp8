@@ -5,7 +5,7 @@ namespace Oct8pus\Webp;
 class Helper
 {
     /**
-     * List directory recursively
+     * List directory files recursively
      * @param string $dir
      * @param [out] array $files
      * @return true on success, otherwise false
@@ -40,46 +40,44 @@ class Helper
     }
 
     /**
-     * List images in directory
+     * List directory files recursively, filter by extension
      * @param string $dir
+     * @param array $extensions
      * @param [out] array $files
      * @return true on success, otherwise false
      */
-    public static function list_images(string $dir, array& $files): bool
+    public static function list_dir_ext(string $dir, array $extensions, array& $files): bool
     {
-        // list all files
+        // list all files recursively
         if (!self::list_dir($dir, $files)) {
             $files = null;
             return false;
         }
 
-        // filter to only images
-        $files = array_filter($files, 'self::filter_images');
+        // filter to extension
+        $files = array_filter($files, function ($file) use ($extensions) {
+            // get file extension
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+
+            // check if extension in array
+            if (in_array($ext, $extensions))
+                return true;
+            else
+                return false;
+        });
 
         return true;
     }
 
-    public static $images_ext = [
+    public static $ext_jpg_png = [
         'jpg',
         'jpeg',
         'png',
     ];
 
-    /**
-     * Filter files that are images
-     * @param  string $file
-     * @return bool true if image otherwise false
-     */
-    public static function filter_images(string $file): bool
-    {
-        // get file extension
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-
-        if (in_array($ext, self::$images_ext))
-            return true;
-        else
-            return false;
-    }
+    public static $ext_webp = [
+        'webp',
+    ];
 
     /**
      * Check if command is installed

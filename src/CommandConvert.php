@@ -23,22 +23,21 @@ class CommandConvert extends Command
     protected function configure(): void
     {
         $this->setName('convert')
-            ->setDescription('convert images in directory to webp')
+            ->setDescription('Convert images in directory to webp')
             ->addArgument('directory', InputArgument::REQUIRED);
     }
 
     /**
      * Execute command
-     * @param  InputInterface  $input
-     * @param  OutputInterface  $output
+     * @param  InputInterface $input
+     * @param  OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-//        if ($input->getOption('test'))
-
         Webp::set_logger($output);
 
+        // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
         // log time
@@ -64,13 +63,13 @@ class CommandConvert extends Command
         $dir   = $input->getArgument('directory');
         $files = [];
 
-        if (!Helper::list_images($dir, $files)) {
+        if (!Helper::list_dir_ext($dir, Helper::$ext_jpg_png, $files)) {
             $io->error('List images');
             exit();
         }
 
         // convert images
-        $io->writeln('<info>Convert images... - count - '. count($files) .'</info>');
+        $io->writeln('<info>Convert images... - '. count($files) .'</info>');
 
         foreach ($files as $file) {
             // check if image was already converted
@@ -98,9 +97,9 @@ class CommandConvert extends Command
         // print stats
         Webp::stats();
 
+        // log performance
         $event = $stopwatch->stop('main');
-
-        $io->writeln('script execution time - '. $event);
+        $io->writeln($event);
 
         return 0;
     }
