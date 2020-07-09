@@ -1,8 +1,9 @@
 #!/usr/bin/env php
-<?php declare(strict_types=1);
+<?php //not possible declare(strict_types=1);
 
-if (file_exists(__DIR__ .'/../../autoload.php'))
-    require(__DIR__ .'/../../autoload.php');
+// program entry point
+if (file_exists(__DIR__ .'/../vendor/autoload.php'))
+    require(__DIR__ .'/../vendor/autoload.php');
 else
     require(__DIR__ .'/vendor/autoload.php');
 
