@@ -90,7 +90,6 @@ class CommandConvert extends Command
 
         // create progress bar
         $this->io->newLine();
-
         $this->createProgressBar(count($files));
 
         foreach ($files as $i => $file) {
@@ -124,6 +123,7 @@ class CommandConvert extends Command
 
         // log success
         $this->io->newLine();
+        $this->io->newLine();
         $this->io->success('');
 
         // check performance
@@ -136,8 +136,6 @@ class CommandConvert extends Command
         $size_dest  = Helper::format_size($stats['size_dest'], 1);
 
         // create table
-        $this->io->newLine();
-
         $this->io->table([
             'total', 'skipped', 'time', 'size original', 'size webp'
         ], [[
@@ -220,7 +218,7 @@ class CommandConvert extends Command
     {
         $this->bar = $this->io->createProgressBar($steps);
 
-        $this->bar->setBarWidth(50);
+        $this->bar->setBarWidth(70);
         $this->bar->setFormat(' [%bar%] %current%/%max% (%percent:3s%%) - %elapsed:6s%/%estimated:-6s% - %memory:6s%');
 
         $this->bar->start();
