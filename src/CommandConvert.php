@@ -183,7 +183,7 @@ class CommandConvert extends Command
         if ($delta > 0) {
             // delete file
             unlink($dest);
-            $this->io->writeln("<comment>webp image bigger than source - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_NORMAL);
+            $this->io->writeln("<comment>webp image bigger than source - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_VERBOSE);
         }
         else {
             // save sizes
