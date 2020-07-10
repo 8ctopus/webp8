@@ -155,7 +155,7 @@ class CommandConvert extends Command
      * @param  string $dest
      * @return bool true on success, otherwise false
      */
-    private function convert(string $src, array $stats, string $dest = ''): bool
+    private function convert(string $src, array &$stats, string $dest = ''): bool
     {
         // create destination file
         if (empty($dest))
