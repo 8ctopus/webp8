@@ -60,18 +60,20 @@ class CommandCleanup extends Command
             return 1;
         }
 
+        $count = count($files);
+
         // check if any images to delete
-        if (!count($files)) {
-            $io->warning('Nothing to cleanup');
+        if (!$count) {
+            $io->success('It\'s already clean');
 
             return 0;
         }
 
         // delete images
-        $io->writeln('Delete images... - '. count($files), OutputInterface::VERBOSITY_VERBOSE);
+        //$io->writeln('Delete images... - '. $count, OutputInterface::VERBOSITY_VERBOSE);
 
         // ask user confirmation if not dry run
-        if (!$input->getOption('dry-run') && !$io->confirm('Cleanup directory?', false)) {
+        if (!$input->getOption('dry-run') && !$io->confirm("sure you want to delete {$count} webp images?", false)) {
             $io->warning('Abort');
 
             return 0;
@@ -86,7 +88,7 @@ class CommandCleanup extends Command
         }
 
         // log success
-        $io->success(count($files). ' images deleted');
+        $io->success('');
 
         return 0;
     }
