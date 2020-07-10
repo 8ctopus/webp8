@@ -7,7 +7,7 @@ if (file_exists(__DIR__ .'/../vendor/autoload.php'))
 else
     require(__DIR__ .'/vendor/autoload.php');
 
-$app = new Symfony\Component\Console\Application('webp8', '0.1.0');
+$app = new Symfony\Component\Console\Application('webp8', '0.1.2');
 $app->add(new Oct8pus\Webp\CommandConvert());
 $app->add(new Oct8pus\Webp\CommandCleanup());
 
