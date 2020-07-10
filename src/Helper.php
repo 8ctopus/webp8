@@ -113,18 +113,18 @@ class Helper
         else
             $neg = false;
 
-        if (($bytes >= 0) && ($bytes < $kilobyte))
-            $result = $bytes .'B';
+        if ($bytes < $kilobyte)
+            $result = $bytes .' B';
         elseif (($bytes >= $kilobyte) && ($bytes < $megabyte))
-            $result = round($bytes / $kilobyte, $precision) .'KB';
+            $result = sprintf("%.{$precision}f KB", $bytes / $kilobyte, $precision);
         elseif (($bytes >= $megabyte) && ($bytes < $gigabyte))
-            $result = round($bytes / $megabyte, $precision) .'MB';
+            $result = sprintf("%.{$precision}f MB", $bytes / $megabyte, $precision);
         elseif (($bytes >= $gigabyte) && ($bytes < $terabyte))
-            $result = round($bytes / $gigabyte, $precision) .'GB';
+            $result = sprintf("%.{$precision}f GB", $bytes / $gigabyte, $precision);
         elseif ($bytes >= $terabyte)
-            $result = round($bytes / $terabyte, $precision) .'TB';
+            $result = sprintf("%.{$precision}f TB", $bytes / $terabyte, $precision);
         else
-            $result = $bytes .'B';
+            $result = $bytes .' B';
 
         return $neg ? '-'. $result : $result;
     }
@@ -139,6 +139,6 @@ class Helper
         // convert milliseconds to seconds
         $seconds = $ms / 1000;
 
-        return sprintf('%01.2fs', $seconds);
+        return sprintf('%01.2f s', $seconds);
     }
 }
