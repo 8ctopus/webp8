@@ -121,8 +121,7 @@ class CommandConvert extends Command
         }
 
         // log success
-        $this->io->newLine();
-        $this->io->newLine();
+        $this->io->newLine(2);
         $this->io->success('');
 
         // check performance
