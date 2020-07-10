@@ -86,7 +86,7 @@ class CommandCleanup extends Command
         }
 
         // log success
-        $io->success('');
+        $io->success(count($files). ' images deleted');
 
         return 0;
     }
