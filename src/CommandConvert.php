@@ -194,7 +194,7 @@ class CommandConvert extends Command
 
         // elapsed time
         $delta_time  = hrtime(true) - $time;
-        $delta_time /= 1e+3;
+        $delta_time /= 1e+6;
         $delta_time  = Helper::format_time($delta_time);
 
         // format sizes
@@ -203,7 +203,7 @@ class CommandConvert extends Command
         $delta     = Helper::format_size($delta, 0);
 
         // log
-        $this->io->writeln("delta - $delta_per% / $delta - ${delta_time}ms - size src - ${size_src} - size dest - ${size_dest}", OutputInterface::VERBOSITY_VERBOSE);
+        $this->io->writeln("delta - $delta_per% / $delta - ${delta_time} - size src - ${size_src} - size dest - ${size_dest}", OutputInterface::VERBOSITY_VERBOSE);
 
         return true;
     }
