@@ -16,6 +16,9 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class CommandConvert extends Command
 {
+    private $io;
+    private $bar;
+
     /**
      * Configure command options
      * @return void
@@ -26,8 +29,6 @@ class CommandConvert extends Command
             ->setDescription('Convert images in directory to webp')
             ->addArgument('directory', InputArgument::REQUIRED);
     }
-
-    private $io;
 
     /**
      * Execute command
@@ -81,16 +82,18 @@ class CommandConvert extends Command
             return 1;
         }
 
-        // convert images
-        $this->io->writeln('Convert images... - '. count($files), OutputInterface::VERBOSITY_NORMAL);
-
         $stats = [
             'size_src'  => 0,
             'size_dest' => 0,
             'skipped'   => 0,
         ];
 
-        foreach ($files as $file) {
+        // create progress bar
+        $this->io->newLine();
+
+        $this->createProgressBar(count($files));
+
+        foreach ($files as $i => $file) {
             // check if image was already converted
             if (file_exists($file .'.webp')) {
                 // compare files modification time
@@ -99,8 +102,12 @@ class CommandConvert extends Command
 
                 // if source image was modified after webp, it means the image was updated and therefore needs to be converted again
                 if ($src_modified < $dest_modified) {
-                    $this->io->writeln('Skip webp exists - '. $file, OutputInterface::VERBOSITY_NORMAL);
+                    $this->io->writeln('Skip webp exists - '. $file, OutputInterface::VERBOSITY_VERBOSE);
                     $stats['skipped'] += 1;
+
+                    // advance progress bar
+                    $this->bar->advance();
+
                     continue;
                 }
             }
@@ -110,7 +117,14 @@ class CommandConvert extends Command
                 $this->io->writeln('Image converted - '. $file, OutputInterface::VERBOSITY_VERBOSE);
             else
                 $this->io->error('Convert image - '. $file);
+
+            // advance progress bar
+            $this->bar->advance();
         }
+
+        // log success
+        $this->io->newLine();
+        $this->io->success('');
 
         // check performance
         $event = $stopwatch->stop('main');
@@ -130,9 +144,6 @@ class CommandConvert extends Command
                 count($files), $stats['skipped'], $time, $size_src, $size_dest,
             ],
         ]);
-
-        // log success
-        $this->io->success('');
 
         return 0;
     }
@@ -198,5 +209,20 @@ class CommandConvert extends Command
         $this->io->writeln("delta - $delta_per% / $delta - ${delta_time}ms - size src - ${size_src} - size dest - ${size_dest}", OutputInterface::VERBOSITY_VERBOSE);
 
         return true;
+    }
+
+    /**
+     * Create progress bar
+     * @param int $steps
+     * @return void
+     */
+    private function createProgressBar(int $steps): void
+    {
+        $this->bar = $this->io->createProgressBar($steps);
+
+        $this->bar->setBarWidth(50);
+        $this->bar->setFormat(' [%bar%] %current%/%max% (%percent:3s%%) - %elapsed:6s%/%estimated:-6s% - %memory:6s%');
+
+        $this->bar->start();
     }
 }
