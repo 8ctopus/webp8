@@ -130,7 +130,7 @@ class Helper
     }
 
     /**
-     * Format milliseconds to seconds string
+     * Format milliseconds to minutes and seconds string
      * @param  float $ms
      * @return string
      */
@@ -139,6 +139,10 @@ class Helper
         // convert milliseconds to seconds
         $seconds = $ms / 1000;
 
-        return sprintf('%01.2f s', $seconds);
+        $minutes = $seconds / 60;
+
+        $seconds = $seconds % 60;
+
+        return sprintf('%02d:%02d', $minutes, $seconds);
     }
 }
