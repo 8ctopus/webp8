@@ -39,8 +39,19 @@ class CommandCleanup extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
+        // get directory argument
+        $dir = $input->getArgument('directory');
+
+        // convert to realpath
+        $dir = realpath($dir);
+
+        if (!$dir) {
+            $io->error('Directory does not exist');
+
+            return 1;
+        }
+
         // list images to delete
-        $dir   = $input->getArgument('directory');
         $files = [];
 
         if (!Helper::list_dir_ext($dir, Helper::$ext_webp, $files)) {
