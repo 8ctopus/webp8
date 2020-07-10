@@ -89,7 +89,6 @@ class CommandConvert extends Command
         ];
 
         // create progress bar
-        $this->io->newLine();
         $this->createProgressBar(count($files));
 
         foreach ($files as $i => $file) {
@@ -105,7 +104,7 @@ class CommandConvert extends Command
                     $stats['skipped'] += 1;
 
                     // advance progress bar
-                    $this->bar->advance();
+                    $this->progressBarAdvance();
 
                     continue;
                 }
@@ -118,7 +117,7 @@ class CommandConvert extends Command
                 $this->io->error('Convert image - '. $file);
 
             // advance progress bar
-            $this->bar->advance();
+            $this->progressBarAdvance();
         }
 
         // log success
@@ -163,7 +162,7 @@ class CommandConvert extends Command
         // https://developers.google.com/speed/webp/docs/cwebp
         $command = "cwebp '{$src}' -o '{$dest}' -quiet -m 6";
 
-        $this->io->writeln($command, OutputInterface::VERBOSITY_VERBOSE);
+        $this->io->writeln(PHP_EOL . $command, OutputInterface::VERBOSITY_VERBOSE);
 
         // log time
         $time = hrtime(true);
@@ -216,11 +215,29 @@ class CommandConvert extends Command
      */
     private function createProgressBar(int $steps): void
     {
+        // do not show progress bar in verbose mode
+        if ($this->io->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $this->bar = null;
+            return;
+        }
+
+        $this->io->newLine();
+
         $this->bar = $this->io->createProgressBar($steps);
 
         $this->bar->setBarWidth(70);
         $this->bar->setFormat(' [%bar%] %current%/%max% (%percent:3s%%) - %elapsed:6s%/%estimated:-6s% - %memory:6s%');
 
         $this->bar->start();
+    }
+
+    /**
+     * Advance progress bar by one step
+     * @return void
+     */
+    private function progressBarAdvance(): void
+    {
+        if ($this->bar)
+            $this->bar->advance();
     }
 }
