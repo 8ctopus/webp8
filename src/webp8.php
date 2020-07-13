@@ -1,5 +1,4 @@
-#!/usr/bin/env php
-<?php //not possible declare(strict_types=1);
+<?php declare(strict_types=1);
 
 // program entry point
 if (file_exists(__DIR__ .'/../vendor/autoload.php'))
