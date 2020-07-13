@@ -50,33 +50,26 @@ $finder->files()
 foreach ($finder as $file)
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
 
-/*
-// create phar loader
-$file = __DIR__ .'/Phar.php';
+// webp8 entry point
+$file = 'src/webp8.php';
 
-if (!file_exists($file)) {
-    // FIX ME
-    exit();
-}
+// create default "boot" loader
+$boot_loader = $phar->createDefaultStub($file);
 
-// add shebang
-$stub  = '';//"#!/usr/bin/env php\n";
-$contents = file_get_contents($file, false);
+// add shebang to bootloader
+$stub = "#!/usr/bin/env php\n";
 
-$a = $phar->createDefaultStub();
+$boot_loader = $stub . $boot_loader;
 
-$phar->setStub($stub . $contents);
-*/
-
-// set entry point
-$phar->setDefaultStub('src/webp8.php');
+// set bootloader
+$phar->setStub($boot_loader);
 
 $phar->stopBuffering();
 
 // compress to gzip
 //$phar->compress(Phar::GZ);
 
-echo('phar successfully created');
+echo('Create phar - OK');
 
 /**
  * Get file relative path
