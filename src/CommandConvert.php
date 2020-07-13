@@ -83,9 +83,10 @@ class CommandConvert extends Command
         }
 
         $stats = [
-            'size_src'  => 0,
-            'size_dest' => 0,
-            'skipped'   => 0,
+            'size_src'    => 0,
+            'size_dest'   => 0,
+            'skipped'     => 0,
+            'webp_bigger' => 0,
         ];
 
         // create progress bar
@@ -135,9 +136,21 @@ class CommandConvert extends Command
 
         // create table
         $this->io->table([
-            'total', 'skipped', 'time', 'size original', 'size webp'
+            'total',
+            'converted',
+            'skipped',
+            'webp bigger',
+            'time',
+            'size original',
+            'size webp',
         ], [[
-                count($files), $stats['skipped'], $time, $size_src, $size_dest,
+                count($files),
+                count($files) - $stats['skipped'],
+                $stats['skipped'],
+                $stats['webp_bigger'],
+                $time,
+                $size_src,
+                $size_dest,
             ],
         ]);
 
@@ -181,8 +194,9 @@ class CommandConvert extends Command
         $delta_per = round($delta * 100 / $size_src, 0);
 
         if ($delta > 0) {
-            // delete file
+            // delete webp if bigger than original
             unlink($dest);
+            $stats['webp_bigger'] += 1;
             $this->io->writeln("<comment>webp image bigger than source - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_VERBOSE);
         }
         else {
