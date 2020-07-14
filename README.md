@@ -2,7 +2,7 @@ web8p is a command line tool to convert images to webp format
 
 # how to install
 
-    curl -L -o webp8.phar https://github.com/8ctopus/webp8/releases/download/v0.1.3/webp8.phar
+    curl -L -o webp8.phar https://github.com/8ctopus/webp8/releases/download/v0.1.4/webp8.phar
 
     # check hash against the one published under releases
     sha256sum webp8.phar
@@ -10,8 +10,11 @@ web8p is a command line tool to convert images to webp format
     # make phar executable
     chmod +x webp8.phar
     
-    # rename phar
+    # rename phar (optional)
     mv webp8.phar webp8
+
+    # move phar to /usr/local/bin/ (optional)
+    mv webp8 /usr/local/bin/
     
 ## convert images to webp
 
