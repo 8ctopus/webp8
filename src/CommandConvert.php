@@ -177,7 +177,7 @@ class CommandConvert extends Command
 
         // create command
         // https://developers.google.com/speed/webp/docs/cwebp
-        $command = "cwebp '{$src}' -o '{$dest}' -quiet -m 6";
+        $command = "cwebp -quiet -m 6 '{$src}' -o '{$dest}'";
 
         $this->io->writeln(PHP_EOL . $command, OutputInterface::VERBOSITY_VERBOSE);
 
