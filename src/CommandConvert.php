@@ -92,6 +92,9 @@ class CommandConvert extends Command
         // create progress bar
         $this->createProgressBar(count($files));
 
+        // get multithreading option
+        $multithreading = $input->hasOption('multithreading');
+
         foreach ($files as $i => $file) {
             // check if image was already converted
             if (file_exists($file .'.webp')) {
@@ -112,7 +115,7 @@ class CommandConvert extends Command
             }
 
             // convert single image to webp
-            if (self::convert($file, $stats))
+            if (self::convert($file, $stats, $multithreading))
                 $this->io->writeln('Image converted - '. $file, OutputInterface::VERBOSITY_VERBOSE);
             else
                 $this->io->error('Convert image - '. $file);
@@ -166,10 +169,11 @@ class CommandConvert extends Command
      * Convert image to webp
      * @param  string $src
      * @param  [in, out] array $stats
+     * @param  bool $multithreading
      * @param  string $dest
      * @return bool true on success, otherwise false
      */
-    private function convert(string $src, array &$stats, string $dest = ''): bool
+    private function convert(string $src, array &$stats, bool $multithreading, string $dest = ''): bool
     {
         // create destination file
         if (empty($dest))
@@ -177,7 +181,13 @@ class CommandConvert extends Command
 
         // create command
         // https://developers.google.com/speed/webp/docs/cwebp
-        $command = "cwebp -quiet -m 6 '{$src}' -o '{$dest}'";
+        $options = '-quiet -m 6';
+
+        // check for multi-threading option
+        if ($multithreading)
+            $options .= ' -mt';
+
+        $command = "cwebp {$options} '{$src}' -o '{$dest}'";
 
         $this->io->writeln(PHP_EOL . $command, OutputInterface::VERBOSITY_VERBOSE);
 
