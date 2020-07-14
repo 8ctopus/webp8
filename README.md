@@ -10,13 +10,16 @@ web8p is a command line tool to convert images to webp format
     # make phar executable
     chmod +x webp8.phar
     
+    # rename phar
+    mv webp8.phar webp8
+    
 ## convert images to webp
 
-    ./webp8.phar convert [-v] directory
+    ./webp8 convert [-v] directory
 
 ## delete existing webp images
 
-    ./webp8.phar cleanup [--dry-run] [-v] directory
+    ./webp8 cleanup [--dry-run] [-v] directory
 
 # build phar
 
