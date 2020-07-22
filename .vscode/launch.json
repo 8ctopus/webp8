@@ -19,7 +19,7 @@
             "type": "php",
             "request": "launch",
             "port": 9000,
-            "stopOnEntry": false,
+            "stopOnEntry": true,
             "pathMappings": {
                 "/var/www/site/": "${workspaceRoot}/",
             }
