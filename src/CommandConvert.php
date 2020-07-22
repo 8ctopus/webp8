@@ -135,7 +135,7 @@ class CommandConvert extends Command
         // calculate stats
         $size_delta = Helper::format_size($stats['size_dest'] - $stats['size_src'], 1);
 
-        $compression = round($stats['size_src'] / ($stats['size_dest'] ?? 1), 1) .' x';
+        $compression = round($stats['size_src'] / ($stats['size_dest'] ? $stats['size_dest'] : 1), 1) .' x';
 
         $size_src   = Helper::format_size($stats['size_src'], 1);
         $size_dest  = Helper::format_size($stats['size_dest'], 1);
