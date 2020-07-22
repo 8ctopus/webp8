@@ -18,7 +18,7 @@ web8p is a command line tool to convert images to webp format
     
 ## convert images to webp
 
-    ./webp8 convert [-v] directory
+    ./webp8 convert [--multithreading] [-v] directory
 
     [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 15843/15843 (100%) -   1 hr/1 hr   - 6.0 MiB
 

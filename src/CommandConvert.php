@@ -9,6 +9,7 @@ namespace Oct8pus\Webp;
 use Oct8pus\Webp\Helper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -27,7 +28,8 @@ class CommandConvert extends Command
     {
         $this->setName('convert')
             ->setDescription('Convert images in directory to webp')
-            ->addArgument('directory', InputArgument::REQUIRED);
+            ->addArgument('directory', InputArgument::REQUIRED)
+            ->addOption('multithreading', 'm', InputOption::VALUE_NONE, 'use multi-threading to convert files');
     }
 
     /**
@@ -93,7 +95,7 @@ class CommandConvert extends Command
         $this->createProgressBar(count($files));
 
         // get multithreading option
-        $multithreading = $input->hasOption('multithreading');
+        $multithreading = $input->getOption('multithreading');
 
         foreach ($files as $i => $file) {
             // check if image was already converted
