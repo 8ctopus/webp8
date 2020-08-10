@@ -50,7 +50,7 @@ $finder->files()
 foreach ($finder as $file)
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
 
-// webp8 entry point
+// entry point
 $file = 'src/webp8.php';
 
 // create default "boot" loader
