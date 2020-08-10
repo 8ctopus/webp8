@@ -15,26 +15,22 @@
             }
         },
         {
-            "name": "xdebug 9000 (CLI)",
+            "name": "listen CLI",
             "type": "php",
             "request": "launch",
             "port": 9000,
-            "stopOnEntry": true,
-            "pathMappings": {
-                "/var/www/site/": "${workspaceRoot}/",
-            }
+            "stopOnEntry": false
         },
         {
-            "name": "Launch currently open script",
+            "name": "run CLI",
             "type": "php",
             "request": "launch",
             "program": "${file}",
+            "args": [
+            ],
             "cwd": "${fileDirname}",
-            "port": 9001,
-            "stopOnEntry": true,
-            "pathMappings": {
-                "/var/www/site/": "${workspaceRoot}/",
-            }
+            "port": 9000,
+            "stopOnEntry": false
         }
     ]
 }
