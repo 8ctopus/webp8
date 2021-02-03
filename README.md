@@ -69,3 +69,7 @@ Code adapted from [webp-express](https://github.com/rosell-dk/webp-express)
     # Set Vary:Accept header for the image types handled by WebP Express.
     # The purpose is to make proxies and CDNs aware that the response varies with the Accept header.
     Header append "Vary" "Accept" env=ADDVARY
+
+# improvement ideas
+
+- check that image does not have size 0 after generation
