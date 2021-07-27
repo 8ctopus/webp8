@@ -189,7 +189,7 @@ class CommandConvert extends Command
         if ($multithreading)
             $options .= ' -mt';
 
-        $command = "cwebp {$options} '{$src}' -o '{$dest}'";
+        $command = "cwebp {$options} {$src} -o {$dest}";
 
         $this->io->writeln(PHP_EOL . $command, OutputInterface::VERBOSITY_VERBOSE);
 
