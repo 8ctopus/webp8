@@ -1,5 +1,16 @@
 web8p is a command line tool to convert images to webp format
 
+# webp8 on Windows
+
+    # preparing:
+    # install PHP, Composter and cwebp
+    # add pathes for Composter, PHP and cwebp in Environment Variables (sysdm.cpl -> Advanced -> E.V.)
+    # restart system
+    composter install
+
+    # run:
+    php src\webp8.php
+
 # how to install
 
     curl -L -o webp8.phar https://github.com/8ctopus/webp8/releases/download/v0.1.5/webp8.phar
@@ -15,7 +26,7 @@ web8p is a command line tool to convert images to webp format
 
     # move phar to /usr/local/bin/ (optional)
     mv webp8 /usr/local/bin/
-    
+
 ## convert images to webp
 
     ./webp8 convert [--multithreading] [-v] directory

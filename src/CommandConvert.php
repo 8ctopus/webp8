@@ -189,7 +189,7 @@ class CommandConvert extends Command
         if ($multithreading)
             $options .= ' -mt';
 
-        if (strtoupper(substr(php_uname(), 0, 3)) === 'WIN')
+        if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN')
             $command = "cwebp {$options} {$src} -o {$dest}";
         else
             $command = "cwebp {$options} '{$src}' -o '{$dest}'";
