@@ -51,7 +51,7 @@ foreach ($finder as $file)
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
 
 // entry point
-$file = 'src/webp8.php';
+$file = 'src/EntryPoint.php';
 
 // create default "boot" loader
 $boot_loader = $phar->createDefaultStub($file);
@@ -78,10 +78,10 @@ echo('Create phar - OK');
  */
 function getRelativeFilePath(SplFileInfo $file): string
 {
-    $realPath = $file->getRealPath();
+    $realPath   = $file->getRealPath();
     $pathPrefix = dirname(__DIR__) . DIRECTORY_SEPARATOR;
 
-    $pos = strpos($realPath, $pathPrefix);
+    $pos          = strpos($realPath, $pathPrefix);
     $relativePath = ($pos !== false) ? substr_replace($realPath, '', $pos, strlen($pathPrefix)) : $realPath;
 
     return strtr($relativePath, '\\', '/');
