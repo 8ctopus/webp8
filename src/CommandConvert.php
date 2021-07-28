@@ -190,7 +190,7 @@ class CommandConvert extends Command
             $options .= ' -mt';
 
         if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN')
-            $command = "cwebp {$options} {$src} -o {$dest}";
+            $command = "cwebp {$options} \"{$src}\" -o \"{$dest}\"";
         else
             $command = "cwebp {$options} '{$src}' -o '{$dest}'";
 
