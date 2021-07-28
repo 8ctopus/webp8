@@ -102,8 +102,12 @@ composer install
 
 # test webp8
 php src/EntryPoint.php convert images
+
+# cleanup test dir
+git clean -xfd images
 ```
 
 # improvement ideas
 
-- check that image does not have size 0 after generation
+- check that converted image does not have a size of 0
+- add hint on how to install on windows
