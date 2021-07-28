@@ -4,7 +4,7 @@ web8p is a command line tool to convert images to webp format
 
 ```sh
 # download webp8
-curl -LO https://github.com/8ctopus/webp8/releases/download/v0.1.5/webp8.phar
+curl -LO https://github.com/8ctopus/webp8/releases/download/v0.1.6/webp8.phar
 
 # check hash against the one published under releases
 sha256sum webp8.phar
@@ -22,15 +22,15 @@ mv webp8 /usr/local/bin/
 # webp8 on Windows
 
 ```cmd
-# download and extract libwebp
+# download and extract cwebp.exe from libwebp
 https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.2.0-windows-x64.zip
 
-# add libwebp to PATH (sysdm.cpl -> Advanced -> Environment Variables)
+# add cwebp.exe to PATH (sysdm.cpl -> Advanced -> Environment Variables)
 
 # download webp8
-curl -LO https://github.com/8ctopus/webp8/releases/download/v0.1.5/webp8.phar
+curl -LO https://github.com/8ctopus/webp8/releases/download/v0.1.6/webp8.phar
 
-php webp8.phar
+# check hash against the one published under releases
 ```
 
 ## convert images to webp
