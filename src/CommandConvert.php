@@ -89,6 +89,7 @@ class CommandConvert extends Command
             'size_dest'   => 0,
             'skipped'     => 0,
             'webp_bigger' => 0,
+            'webp_zero_size' => 0,
         ];
 
         // create progress bar
@@ -152,6 +153,7 @@ class CommandConvert extends Command
             'size original',
             'size webp',
             'compression',
+            'webp zero size',
         ], [[
                 count($files),
                 count($files) - $stats['skipped'],
@@ -161,6 +163,7 @@ class CommandConvert extends Command
                 $size_src,
                 $size_dest,
                 $compression,
+                $stats['webp_zero_size'],
             ],
         ]);
 
@@ -223,6 +226,13 @@ class CommandConvert extends Command
             // save sizes
             $stats['size_src']  += $size_src;
             $stats['size_dest'] += $size_dest;
+        }
+
+        if ($size_dest <= 0) {
+            // delete webp if file size zero
+            unlink($dest);
+            $stats['webp_zero_size'] += 1;
+            $this->io->writeln("<comment>webp image file size zero - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_VERBOSE);
         }
 
         // elapsed time
