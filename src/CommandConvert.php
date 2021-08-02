@@ -58,7 +58,7 @@ class CommandConvert extends Command
                 'cwebp command is missing',
                 'ubuntu: apt install webp',
                 'alpine: apk add libwebp-tools',
-                'windows: download libwebp and extract cwebp.exe, add cwebp.exe to PATH (Environment Variables)'
+                'windows: download libwebp and extract cwebp.exe, add cwebp.exe to PATH (Environment Variables)',
             ]);
 
             return 127;
