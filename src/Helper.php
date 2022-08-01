@@ -141,7 +141,7 @@ class Helper
 
         $minutes = $seconds / 60;
 
-        $seconds = $seconds % 60;
+        $seconds = (int) $seconds % 60;
 
         return sprintf('%02d:%02d', $minutes, $seconds);
     }
