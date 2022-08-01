@@ -9,9 +9,9 @@
         }
     ],
     "require": {
-        "symfony/console": "^5.0",
-        "symfony/stopwatch": "^5.1",
-        "symfony/finder": "^5.1"
+        "symfony/console": "^6",
+        "symfony/stopwatch": "^6",
+        "symfony/finder": "^6"
     },
     "autoload": {
         "psr-4": {
