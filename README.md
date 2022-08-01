@@ -99,7 +99,7 @@ php src/Compiler.php
 composer install
 
 # test webp8
-php src/EntryPoint.php convert images
+php src/EntryPoint.php convert -- images
 
 # cleanup test dir
 git clean -xfd images
