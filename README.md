@@ -6,7 +6,7 @@ webp8 is a command line tool to convert images to webp format
 
 ```sh
 # download webp8
-curl -LO https://github.com/8ctopus/webp8/releases/download/0.1.7/webp8.phar
+curl -LO https://github.com/8ctopus/webp8/releases/download/0.1.8/webp8.phar
 
 # check hash against the one published under releases
 sha256sum webp8.phar
@@ -27,7 +27,7 @@ mv webp8 /usr/local/bin/
 
 - add cwebp.exe to PATH (sysdm.cpl -> Advanced -> Environment Variables)
 
-- download webp8, curl -LO https://github.com/8ctopus/webp8/releases/download/0.1.7/webp8.phar
+- download webp8, curl -LO https://github.com/8ctopus/webp8/releases/download/0.1.8/webp8.phar
 
 - check hash against the one published under releases
 
