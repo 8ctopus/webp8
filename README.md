@@ -36,7 +36,7 @@ curl -LO https://github.com/8ctopus/webp8/releases/download/0.1.6/webp8.phar
 ## convert images to webp
 
 ```sh
-./webp8 convert [--multithreading] [-v] directory
+./webp8 convert [--cwebp_m] [-cwebp_q] [--cwebp_z] [--multithreading] directory
 
 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 15843/15843 (100%) -   1 hr/1 hr   - 6.0 MiB
 

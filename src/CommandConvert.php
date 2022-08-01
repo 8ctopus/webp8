@@ -29,6 +29,9 @@ class CommandConvert extends Command
         $this->setName('convert')
             ->setDescription('Convert images in directory to webp')
             ->addArgument('directory', InputArgument::REQUIRED)
+            ->addOption('cwebp_m', 'M', InputOption::VALUE_OPTIONAL, 'Specify the compression method to use (0 - 6)', null)
+            ->addOption('cwebp_q', 'Q', InputOption::VALUE_OPTIONAL, 'Specify the compression factor for RGB channels between 0 and 100', null)
+            ->addOption('cwebp_z', 'Z', InputOption::VALUE_OPTIONAL, 'Switch on lossless compression mode with the specified level between 0 and 9', null)
             ->addOption('multithreading', 'm', InputOption::VALUE_NONE, 'use multi-threading to convert files');
     }
 
@@ -98,6 +101,9 @@ class CommandConvert extends Command
 
         // get multithreading option
         $multithreading = $input->getOption('multithreading');
+        $q = $input->getOption('cwebp_q') === null ? null : (int)$input->getOption('cwebp_q');
+        $m = $input->getOption('cwebp_m') === null ? null : (int)$input->getOption('cwebp_m');
+        $z = $input->getOption('cwebp_z') === null ? null : (int)$input->getOption('cwebp_z');
 
         foreach ($files as $i => $file) {
             // check if image was already converted
@@ -119,7 +125,7 @@ class CommandConvert extends Command
             }
 
             // convert single image to webp
-            if (self::convert($file, $stats, $multithreading))
+            if (self::convert($file, $stats, $multithreading, '', $q, $m, $z))
                 $this->io->writeln('Image converted - '. $file, OutputInterface::VERBOSITY_VERBOSE);
             else
                 $this->io->error('Convert image - '. $file);
@@ -156,16 +162,16 @@ class CommandConvert extends Command
             'compression',
             'webp zero size',
         ], [[
-                count($files),
-                count($files) - $stats['skipped'],
-                $stats['skipped'],
-                $stats['webp_bigger'],
-                $time,
-                $size_src,
-                $size_dest,
-                $compression,
-                $stats['webp_zero_size'],
-            ],
+            count($files),
+            count($files) - $stats['skipped'],
+            $stats['skipped'],
+            $stats['webp_bigger'],
+            $time,
+            $size_src,
+            $size_dest,
+            $compression,
+            $stats['webp_zero_size'],
+        ],
         ]);
 
         return 0;
@@ -177,9 +183,12 @@ class CommandConvert extends Command
      * @param  [in, out] array $stats
      * @param  bool $multithreading
      * @param  string $dest
+     * @param  int $q cwebp -q
+     * @param  int $m cwebp -m
+     * @param  int $z cwebp -z
      * @return bool true on success, otherwise false
      */
-    private function convert(string $src, array &$stats, bool $multithreading, string $dest = ''): bool
+    private function convert(string $src, array &$stats, bool $multithreading, string $dest = '', int $q = null, int $m = null, int $z = null): bool
     {
         // create destination file
         if (empty($dest))
@@ -187,7 +196,26 @@ class CommandConvert extends Command
 
         // create command
         // https://developers.google.com/speed/webp/docs/cwebp
-        $options = '-quiet -m 6';
+        $options = '-quiet';
+
+        // Default "-m 6" as previously
+        if ($q === null && $m === null && $z === null) {
+            $options .= ' -m 6';
+        }
+        // New options available
+        else {
+            if ($q !== null) {
+                $options .= " -q $q";
+            }
+
+            if ($m !== null) {
+                $options .= " -m $m";
+            }
+
+            if ($z !== null) {
+                $options .= " -z $z";
+            }
+        }
 
         // check for multi-threading option
         if ($multithreading)
