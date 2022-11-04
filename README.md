@@ -1,4 +1,4 @@
-# web8p
+# webp8
 
 webp8 is a command line tool to convert images to webp format
 
