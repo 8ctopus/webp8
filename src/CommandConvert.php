@@ -105,7 +105,7 @@ class CommandConvert extends Command
         $m = $input->getOption('cwebp_m') === null ? null : (int) $input->getOption('cwebp_m');
         $z = $input->getOption('cwebp_z') === null ? null : (int) $input->getOption('cwebp_z');
 
-        foreach ($files as $i => $file) {
+        foreach ($files as $file) {
             // check if image was already converted
             if (file_exists($file . '.webp')) {
                 // compare files modification time
@@ -144,7 +144,7 @@ class CommandConvert extends Command
         $time = Helper::format_time($event->getDuration());
 
         // calculate stats
-        $size_delta = Helper::format_size($stats['size_dest'] - $stats['size_src'], 1);
+        //$size_delta = Helper::format_size($stats['size_dest'] - $stats['size_src'], 1);
 
         $compression = round($stats['size_src'] / ($stats['size_dest'] ? $stats['size_dest'] : 1), 1) . ' x';
 
@@ -162,17 +162,18 @@ class CommandConvert extends Command
             'size webp',
             'compression',
             'webp zero size',
-        ], [[
-            count($files),
-            count($files) - $stats['skipped'],
-            $stats['skipped'],
-            $stats['webp_bigger'],
-            $time,
-            $size_src,
-            $size_dest,
-            $compression,
-            $stats['webp_zero_size'],
-        ],
+        ], [
+            [
+                count($files),
+                count($files) - $stats['skipped'],
+                $stats['skipped'],
+                $stats['webp_bigger'],
+                $time,
+                $size_src,
+                $size_dest,
+                $compression,
+                $stats['webp_zero_size'],
+            ],
         ]);
 
         return 0;
