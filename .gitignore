@@ -2,9 +2,10 @@
 /log/
 /ssl/
 
+# composer
 /vendor/
 
-*.webp
-
+# other
 /*.sublime-workspace
 /*.phar
+*.webp
