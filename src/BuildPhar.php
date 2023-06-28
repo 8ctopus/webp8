@@ -9,7 +9,11 @@
 
 declare(strict_types=1);
 
+namespace Oct8pus\Webp8;
+
 use Symfony\Component\Finder\Finder;
+use Phar;
+use SplFileInfo;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -21,9 +25,9 @@ if (file_exists($filename)) {
 }
 
 // create phar
-$phar = new \Phar($filename);
+$phar = new Phar($filename);
 
-$phar->setSignatureAlgorithm(\Phar::SHA1);
+$phar->setSignatureAlgorithm(Phar::SHA1);
 
 // start buffering, mandatory to modify stub
 $phar->startBuffering();
@@ -34,7 +38,7 @@ $finder = new Finder();
 $finder->files()
     ->ignoreVCS(true)
     ->name('*.php')
-    ->notName('Compiler.php')
+    ->notName('BuildPhar.php')
     ->in(__DIR__);
 
 foreach ($finder as $file) {
@@ -56,18 +60,18 @@ foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
 }
 
-$file = 'src/EntryPoint.php';
+$entrypoint = 'src/EntryPoint.php';
 
 // create default "boot" loader
-$boot_loader = $phar->createDefaultStub($file);
+$bootLoader = $phar->createDefaultStub($entrypoint);
 
 // add shebang to bootloader
 $stub = "#!/usr/bin/env php\n";
 
-$boot_loader = $stub . $boot_loader;
+$bootLoader = $stub . $bootLoader;
 
 // set bootloader
-$phar->setStub($boot_loader);
+$phar->setStub($bootLoader);
 
 $phar->stopBuffering();
 
@@ -79,7 +83,7 @@ echo 'Create phar - OK';
 /**
  * Get file relative path
  *
- * @param \SplFileInfo $file
+ * @param SplFileInfo $file
  *
  * @return string
  */

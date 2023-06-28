@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @author 8ctopus <hello@octopuslabs.io>
- */
-
 namespace Oct8pus\Webp;
 
 use Symfony\Component\Console\Command\Command;
