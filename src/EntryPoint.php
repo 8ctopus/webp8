@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oct8pus\Webp;
 
+use Exception;
 use Symfony\Component\Console\Application;
 
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
