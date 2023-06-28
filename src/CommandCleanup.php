@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * @author 8ctopus <hello@octopuslabs.io>
@@ -6,21 +8,20 @@
 
 namespace Oct8pus\Webp;
 
-use Oct8pus\Webp\Helper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Stopwatch\Stopwatch;
 
 class CommandCleanup extends Command
 {
     /**
      * Configure command options
+     *
      * @return void
      */
-    protected function configure(): void
+    protected function configure() : void
     {
         $this->setName('cleanup')
             ->setDescription('Delete all webp images from directory')
@@ -30,11 +31,13 @@ class CommandCleanup extends Command
 
     /**
      * Execute command
-     * @param  InputInterface $input
-     * @param  OutputInterface $output
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
@@ -80,9 +83,10 @@ class CommandCleanup extends Command
         }
 
         foreach ($files as $file) {
-            if (!$input->getOption('dry-run'))
+            if (!$input->getOption('dry-run')) {
                 // delete file
                 unlink($file);
+            }
 
             $io->writeln("Deleted {$file}", OutputInterface::VERBOSITY_VERBOSE);
         }

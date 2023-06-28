@@ -37,8 +37,9 @@ $finder->files()
     ->notName('Compiler.php')
     ->in(__DIR__);
 
-foreach ($finder as $file)
+foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
+}
 
 // add vendor files
 $finder = new Finder();
@@ -49,10 +50,11 @@ $finder->files()
     ->exclude('Tests')
     ->exclude('tests')
     ->exclude('docs')
-    ->in(__DIR__ .'/../vendor/');
+    ->in(__DIR__ . '/../vendor/');
 
-foreach ($finder as $file)
+foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
+}
 
 $file = 'src/EntryPoint.php';
 
@@ -72,19 +74,21 @@ $phar->stopBuffering();
 // compress to gzip
 //$phar->compress(Phar::GZ);
 
-echo('Create phar - OK');
+echo 'Create phar - OK';
 
 /**
  * Get file relative path
- * @param  \SplFileInfo $file
+ *
+ * @param \SplFileInfo $file
+ *
  * @return string
  */
-function getRelativeFilePath(SplFileInfo $file): string
+function getRelativeFilePath(SplFileInfo $file) : string
 {
-    $realPath   = $file->getRealPath();
+    $realPath = $file->getRealPath();
     $pathPrefix = dirname(__DIR__) . DIRECTORY_SEPARATOR;
 
-    $pos          = strpos($realPath, $pathPrefix);
+    $pos = strpos($realPath, $pathPrefix);
     $relativePath = ($pos !== false) ? substr_replace($realPath, '', $pos, strlen($pathPrefix)) : $realPath;
 
     return strtr($relativePath, '\\', '/');
