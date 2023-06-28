@@ -1,7 +1,8 @@
 {
     "name": "8ctopus/webp8",
-    "type": "project",
+    "type": "application",
     "description": "webp conversion command line tool",
+    "keywords": ["webp", "cwebp", "image conversion"],
     "homepage": "https://github.com/8ctopus/webp8",
     "license": "MIT",
     "authors": [
