@@ -87,23 +87,16 @@ SetEnvIf REDIRECT_ADDVARY 1 ADDVARY=1
 Header append "Vary" "Accept" env=ADDVARY
 ```
 
-# build phar
+## build phar
 
-```sh
-./build.sh
-```
+    ./build.sh
 
-# debug code
-```sh
-# install dependencies
-composer install
+## debug code
 
-# test webp8
-php src/EntryPoint.php convert -- images
+    php src/EntryPoint.php convert -- images
 
-# cleanup test dir
-git clean -xfd images
-```
+    # cleanup test dir
+    git clean -xfd images
 
 # improvement ideas
 
