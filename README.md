@@ -90,8 +90,7 @@ Header append "Vary" "Accept" env=ADDVARY
 # build phar
 
 ```sh
-composer install --no-dev
-php src/BuildPhar.php
+./build.sh
 ```
 
 # debug code
