@@ -1,0 +1,52 @@
+name: badges
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+
+env:
+  COMPOSER_ROOT_VERSION: 1.99
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@2.24.0
+        with:
+          php-version: 8.2
+          extensions: xdebug
+          ini-values: zend.assertions=1
+
+      - name: Install highest dependencies
+        run: composer update --no-interaction --no-progress
+
+      - name: Get lines of code (more sophisticated)
+        id: scc
+        uses: iryanbell/scc-docker-action@v1.0.2
+        with:
+          args: ${{ env.workspace }} -i php --exclude-dir vendor --format json src
+
+      - name: Make lines of code badge
+        uses: emibcn/badge-action@v2.0.2
+        with:
+          label: Lines of Code
+          status: ${{ fromJson(steps.scc.outputs.scc)[0].Code }}
+          color: 'blue'
+          path: .github/lines.svg
+
+      - name: Git push badges to image-data branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: .github
+          publish_branch: image-data
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
