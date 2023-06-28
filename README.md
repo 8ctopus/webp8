@@ -1,7 +1,7 @@
 # webp8
 
-[![license](http://poser.pugx.org/8ctopus/self-sign/license)](https://packagist.org/packages/8ctopus/self-sign)
-![lines of code](https://raw.githubusercontent.com/8ctopus/self-sign/image-data/lines.svg)
+[![license](http://poser.pugx.org/8ctopus/webp8/license)](https://packagist.org/packages/8ctopus/webp8)
+![lines of code](https://raw.githubusercontent.com/8ctopus/webp8/image-data/lines.svg)
 
 webp8 is a command line tool to convert images to webp format
 
