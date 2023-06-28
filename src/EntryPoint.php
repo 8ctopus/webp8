@@ -15,7 +15,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     throw new Exception('autoload not found');
 }
 
-$app = new Application('webp8', '1.0.0');
+$app = new Application('webp8', '1.0.1');
 $app->add(new CommandConvert());
 $app->add(new CommandCleanup());
 
