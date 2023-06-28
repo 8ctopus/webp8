@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "symfony/console": "^6",
+        "symfony/console": "6.1.3",
         "symfony/stopwatch": "^6",
         "symfony/finder": "^6"
     },
