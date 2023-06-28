@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
 
-// program entry point
-if (file_exists(__DIR__ .'/../vendor/autoload.php'))
-    require(__DIR__ .'/../vendor/autoload.php');
-else
-    require(__DIR__ .'/vendor/autoload.php');
+declare(strict_types=1);
+
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+} else {
+    require __DIR__ . '/vendor/autoload.php';
+}
 
 $app = new Symfony\Component\Console\Application('webp8', '0.1.8');
 $app->add(new Oct8pus\Webp\CommandConvert());

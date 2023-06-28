@@ -1,20 +1,24 @@
-<?php declare(strict_types=1);
+<?php
 
 /**
- * Compile webp8 into phar
+ * Build phar
+ *
  * @note php.ini setting phar.readonly must be set to false
  * parts taken from composer compiler https://github.com/composer/composer/blob/master/src/Composer/Compiler.php
  */
 
+declare(strict_types=1);
+
 use Symfony\Component\Finder\Finder;
 
-require(__DIR__ .'/../vendor/autoload.php');
+require __DIR__ . '/../vendor/autoload.php';
 
 $filename = 'webp8.phar';
 
 // clean up before creating a new phar
-if (file_exists($filename))
+if (file_exists($filename)) {
     unlink($filename);
+}
 
 // create phar
 $phar = new \Phar($filename);
@@ -50,7 +54,6 @@ $finder->files()
 foreach ($finder as $file)
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
 
-// entry point
 $file = 'src/EntryPoint.php';
 
 // create default "boot" loader
