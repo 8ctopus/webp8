@@ -7,6 +7,11 @@ webp8 is a command line tool to convert images to webp format
 
 ## how to install
 
+You have the choice between:
+- composer install `composer require 8ctopus/webp8`
+- download the phar
+- or build it yourself
+
 ```sh
 # download webp8
 curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.1/webp8.phar
@@ -90,11 +95,13 @@ SetEnvIf REDIRECT_ADDVARY 1 ADDVARY=1
 Header append "Vary" "Accept" env=ADDVARY
 ```
 
-## build phar
+## for development
+
+### build phar
 
     ./build.sh
 
-## debug code
+### debug code
 
     php src/EntryPoint.php convert -- images
 
