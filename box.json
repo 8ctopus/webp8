@@ -6,5 +6,6 @@
     "main": "src/EntryPoint.php",
     "output": "bin/webp8.phar",
     "compression": "GZ",
-    "stub": true
+    "stub": true,
+    "exclude-dev-files": false
 }
