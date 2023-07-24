@@ -14,7 +14,7 @@ You have the choice between:
 
 ```sh
 # download webp8
-curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.1/webp8.phar
+curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.2/webp8.phar
 
 # check hash against the one published under releases
 sha256sum webp8.phar
@@ -35,7 +35,7 @@ mv webp8 /usr/local/bin/
 
 - add cwebp.exe to PATH (sysdm.cpl -> Advanced -> Environment Variables)
 
-- download webp8, curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.1/webp8.phar
+- download webp8, curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.2/webp8.phar
 
 - check hash against the one published under releases
 
