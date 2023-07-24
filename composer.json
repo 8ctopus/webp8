@@ -1,7 +1,7 @@
 {
     "name": "8ctopus/webp8",
     "type": "application",
-    "description": "webp conversion command line tool",
+    "description": "command line tool to convert images to webp",
     "keywords": ["webp", "cwebp", "image conversion"],
     "homepage": "https://github.com/8ctopus/webp8",
     "license": "MIT",
@@ -13,13 +13,13 @@
     ],
     "require": {
         "symfony/console": "6.1.3",
-        "symfony/stopwatch": "^6",
-        "symfony/finder": "^6"
+        "symfony/stopwatch": "^6"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8",
         "phpstan/phpstan": "^1.9",
-        "phpmd/phpmd": "^2.13"
+        "phpmd/phpmd": "^2.13",
+        "symfony/stopwatch": "^6"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -35,6 +35,6 @@
         "phpmd": "phpmd src ansi phpmd.xml"
     },
     "bin": [
-        "webp8"
+        "bin/webp8.phar"
     ]
 }
