@@ -1,7 +1,3 @@
-/etc/
-/log/
-/ssl/
-
 # composer
 /vendor/
 
