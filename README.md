@@ -22,7 +22,7 @@ sha256sum webp8.phar
 # make phar executable
 chmod +x webp8.phar
 
-# rename phar (optional)
+# rename phar (from here on optional)
 mv webp8.phar webp8
 
 # move phar to /usr/local/bin/ (optional)
