@@ -21,24 +21,38 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@2.24.0
         with:
-          php-version: 8.2
+          php-version: 8.3
           extensions: xdebug
           ini-values: zend.assertions=1
 
       - name: Install highest dependencies
         run: composer update --no-interaction --no-progress
 
-      - name: Get lines of code (more sophisticated)
-        id: scc
-        uses: iryanbell/scc-docker-action@v1.0.2
+      - name: Run tests
+        timeout-minutes: 3
+        run: vendor/bin/phpunit --coverage-clover clover.xml
+
+      - name: Make code coverage badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
-          args: ${{ env.workspace }} -i php --exclude-dir vendor --format json src
+          coverage_badge_path: .github/coverage.svg
+          push_badge: false
+
+      - name: Get lines of code (more sophisticated, uses scc)
+        id: scc
+        uses: hdmsantander/scc-docker-action@3.0
+        with:
+          args: ${{ env.workspace }} -i php --exclude-dir vendor --format json -o scc.json src
+
+      - name: Parse scc output
+        id: parse_scc
+        run: echo "::set-output name=loc::$(jq '.[0].Code' scc.json)"
 
       - name: Make lines of code badge
         uses: emibcn/badge-action@v2.0.2
         with:
           label: Lines of Code
-          status: ${{ fromJson(steps.scc.outputs.scc)[0].Code }}
+          status: ${{ steps.parse_scc.outputs.loc }}
           color: 'blue'
           path: .github/lines.svg
 
