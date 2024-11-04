@@ -31,10 +31,12 @@ mv webp8 /usr/local/bin/
 ### Windows only
 
 - download and extract cwebp.exe from [libwebp](https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.2.0-windows-x64.zip)
+- add `cwebp.exe` to PATH (`sysdm.cpl` -> `Advanced` -> `Environment Variables`)
+- download webp8
 
-- add cwebp.exe to PATH (sysdm.cpl -> Advanced -> Environment Variables)
-
-- download webp8, curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.3/webp8.phar
+```cmd
+curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.3/webp8.phar
+```
 
 - check hash against the one published under releases
 
@@ -53,6 +55,8 @@ mv webp8 /usr/local/bin/
  15843   15843       0         235           64:20   1.2 GB          150.3 MB
 ------- ----------- --------- ------------- ------- --------------- -----------
 ```
+
+_NOTE_: converted images that are bigger in webp format are automatically deleted since the whole point is to get smaller images. You can see the bigger images in the `webp bigger` column.
 
 ## delete existing webp images
 
