@@ -109,5 +109,4 @@ Header append "Vary" "Accept" env=ADDVARY
 
 # improvement ideas
 
-- check that converted image does not have a size of 0
 - add hint on how to install on windows
