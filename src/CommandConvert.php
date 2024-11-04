@@ -54,7 +54,7 @@ class CommandConvert extends Command
         $this->io->writeln('max_execution_time - ' . ini_get('max_execution_time'), OutputInterface::VERBOSITY_VERBOSE);
 
         // check that cwebp is installed
-        if (Helper::command_exists('cwebp')) {
+        if (Helper::commandExists('cwebp')) {
             $this->io->writeln('cwebp command found', OutputInterface::VERBOSITY_VERBOSE);
         } else {
             $this->io->error([
@@ -82,7 +82,7 @@ class CommandConvert extends Command
         // list images to convert
         $files = [];
 
-        if (!Helper::list_dir_ext($dir, Helper::$ext_jpg_png, $files)) {
+        if (!Helper::listDirExtension($dir, Helper::$ext_jpg_png, $files)) {
             $this->io->error('List images');
 
             return 1;
@@ -141,15 +141,15 @@ class CommandConvert extends Command
 
         // check performance
         $event = $stopwatch->stop('main');
-        $time = Helper::format_time($event->getDuration());
+        $time = Helper::formatTime($event->getDuration());
 
         // calculate stats
         //$size_delta = Helper::format_size($stats['size_dest'] - $stats['size_src'], 1);
 
         $compression = round($stats['size_src'] / ($stats['size_dest'] ? $stats['size_dest'] : 1), 1) . ' x';
 
-        $size_src = Helper::format_size($stats['size_src'], 1);
-        $size_dest = Helper::format_size($stats['size_dest'], 1);
+        $size_src = Helper::formatSize($stats['size_src'], 1);
+        $size_dest = Helper::formatSize($stats['size_dest'], 1);
 
         // create table
         $this->io->table([
@@ -274,12 +274,12 @@ class CommandConvert extends Command
         // elapsed time
         $delta_time = hrtime(true) - $time;
         $delta_time /= 1e+6;
-        $delta_time = Helper::format_time($delta_time);
+        $delta_time = Helper::formatTime($delta_time);
 
         // format sizes
-        $size_src = Helper::format_size($size_src, 0);
-        $size_dest = Helper::format_size($size_dest, 0);
-        $delta = Helper::format_size($delta, 0);
+        $size_src = Helper::formatSize($size_src, 0);
+        $size_dest = Helper::formatSize($size_dest, 0);
+        $delta = Helper::formatSize($delta, 0);
 
         // log
         $this->io->writeln("delta - {$delta_per}% / {$delta} - {$delta_time} - size src - {$size_src} - size dest - {$size_dest}", OutputInterface::VERBOSITY_VERBOSE);

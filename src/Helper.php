@@ -24,7 +24,7 @@ class Helper
      *
      * @return true on success, otherwise false
      */
-    public static function list_dir(string $dir, array &$files) : bool
+    public static function listDir(string $dir, array &$files) : bool
     {
         if (!file_exists($dir)) {
             return false;
@@ -50,8 +50,9 @@ class Helper
             if (!is_dir($dir . DIRECTORY_SEPARATOR . $file)) {
                 // add file
                 $files[] = $dir . DIRECTORY_SEPARATOR . $file;
-            } else { // add directory
-                self::list_dir($dir . DIRECTORY_SEPARATOR . $file, $files);
+            } else {
+                // add directory
+                self::listDir($dir . DIRECTORY_SEPARATOR . $file, $files);
             }
         }
 
@@ -67,10 +68,10 @@ class Helper
      *
      * @return true on success, otherwise false
      */
-    public static function list_dir_ext(string $dir, array $extensions, array &$files) : bool
+    public static function listDirExtension(string $dir, array $extensions, array &$files) : bool
     {
         // list all files recursively
-        if (!self::list_dir($dir, $files)) {
+        if (!self::listDir($dir, $files)) {
             $files = null;
             return false;
         }
@@ -81,11 +82,7 @@ class Helper
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
             // check if extension in array
-            if (in_array($ext, $extensions)) {
-                return true;
-            } else {
-                return false;
-            }
+            return in_array($ext, $extensions, true);
         });
 
         return true;
@@ -98,7 +95,7 @@ class Helper
      *
      * @return bool true if installed, otherwise false
      */
-    public static function command_exists(string $cmd) : bool
+    public static function commandExists(string $cmd) : bool
     {
         $return = shell_exec(sprintf('which %s', escapeshellarg($cmd)));
         return !empty($return);
@@ -112,7 +109,7 @@ class Helper
      *
      * @return string
      */
-    public static function format_size(int $bytes, int $precision = 2) : string
+    public static function formatSize(int $bytes, int $precision = 2) : string
     {
         $kilobyte = 1024;
         $megabyte = $kilobyte * $kilobyte;
@@ -150,7 +147,7 @@ class Helper
      *
      * @return string
      */
-    public static function format_time(float $ms) : string
+    public static function formatTime(float $ms) : string
     {
         // convert milliseconds to seconds
         $seconds = $ms / 1000;

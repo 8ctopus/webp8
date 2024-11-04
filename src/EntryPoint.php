@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Oct8pus\Webp;
 
-use Exception;
 use Symfony\Component\Console\Application;
 
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require __DIR__ . '/vendor/autoload.php';
-} elseif (file_exists(__DIR__ . '/../vendor/autoload.php')) {
-    require __DIR__ . '/../vendor/autoload.php';
-} else {
-    throw new Exception('autoload not found');
-}
+$file = '/vendor/autoload.php';
+
+require file_exists(__DIR__ . $file) ? __DIR__ . $file : dirname(__DIR__) . $file;
 
 $app = new Application('webp8', '1.0.3');
 $app->add(new CommandConvert());
