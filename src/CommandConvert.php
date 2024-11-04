@@ -101,8 +101,13 @@ class CommandConvert extends Command
 
         $multithreading = $input->getOption('multithreading');
 
+        // quality factor (0:small..100:big), default=75
         $q = $input->getOption('cwebp_q') === null ? null : (int) $input->getOption('cwebp_q');
+
+        // compression method (0=fast, 6=slowest), default=4
         $m = $input->getOption('cwebp_m') === null ? null : (int) $input->getOption('cwebp_m');
+
+        // activates lossless preset with level in [0:fast, ..., 9:slowest]
         $z = $input->getOption('cwebp_z') === null ? null : (int) $input->getOption('cwebp_z');
 
         foreach ($files as $file) {
