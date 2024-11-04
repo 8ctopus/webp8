@@ -4,35 +4,35 @@ declare(strict_types=1);
 
 namespace Oct8pus\Webp;
 
+use Exception;
+
 class Helper
 {
     /**
      * List directory files recursively
      *
      * @param string $dir
-     * @param [out] array $files
      *
-     * @return true on success, otherwise false
+     * @return array $files
      */
-    public static function listDir(string $dir, array &$files) : bool
+    public static function listDir(string $dir) : array
     {
         if (!file_exists($dir)) {
-            return false;
+            throw new Exception("dir does not exist - {$dir}");
         }
 
-        // list directory
         $list = scandir($dir);
 
-        // check for errors
-        if (!$list) {
-            $files = null;
-            return false;
+        if ($list === false) {
+            throw new Exception("scan dir - {$dir}");
         }
+
+        $files = [];
 
         // list subdirectories
         foreach ($list as $file) {
             // ignore . and .. directories
-            if (in_array($file, ['.', '..'])) {
+            if (in_array($file, ['.', '..'], true)) {
                 continue;
             }
 
@@ -42,11 +42,11 @@ class Helper
                 $files[] = $dir . DIRECTORY_SEPARATOR . $file;
             } else {
                 // add directory
-                self::listDir($dir . DIRECTORY_SEPARATOR . $file, $files);
+                $files = array_merge($files, self::listDir($dir . DIRECTORY_SEPARATOR . $file));
             }
         }
 
-        return true;
+        return $files;
     }
 
     /**
@@ -54,17 +54,13 @@ class Helper
      *
      * @param string $dir
      * @param array  $extensions
-     * @param [out] array $files
      *
-     * @return true on success, otherwise false
+     * @return array $files
      */
-    public static function listDirExtension(string $dir, array $extensions, array &$files) : bool
+    public static function listDirExtension(string $dir, array $extensions) : array
     {
         // list all files recursively
-        if (!self::listDir($dir, $files)) {
-            $files = null;
-            return false;
-        }
+        $files = self::listDir($dir);
 
         // filter to extension
         $files = array_filter($files, function ($file) use ($extensions) {
@@ -75,7 +71,7 @@ class Helper
             return in_array($ext, $extensions, true);
         });
 
-        return true;
+        return $files;
     }
 
     /**
@@ -139,11 +135,8 @@ class Helper
      */
     public static function formatTime(float $ms) : string
     {
-        // convert milliseconds to seconds
         $seconds = $ms / 1000;
-
         $minutes = $seconds / 60;
-
         $seconds = (int) $seconds % 60;
 
         return sprintf('%02d:%02d', $minutes, $seconds);

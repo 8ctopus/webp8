@@ -75,7 +75,6 @@ class CommandConvert extends Command
 
         if (!$dir) {
             $this->io->error('Directory does not exist');
-
             return 1;
         }
 
@@ -88,11 +87,7 @@ class CommandConvert extends Command
             'png',
         ];
 
-        if (!Helper::listDirExtension($dir, $extensions, $files)) {
-            $this->io->error('List images');
-
-            return 1;
-        }
+        $files = Helper::listDirExtension($dir, $extensions);
 
         $stats = [
             'size_src' => 0,
@@ -102,11 +97,10 @@ class CommandConvert extends Command
             'webp_zero_size' => 0,
         ];
 
-        // create progress bar
         $this->createProgressBar(count($files));
 
-        // get multithreading option
         $multithreading = $input->getOption('multithreading');
+
         $q = $input->getOption('cwebp_q') === null ? null : (int) $input->getOption('cwebp_q');
         $m = $input->getOption('cwebp_m') === null ? null : (int) $input->getOption('cwebp_m');
         $z = $input->getOption('cwebp_z') === null ? null : (int) $input->getOption('cwebp_z');
@@ -315,7 +309,7 @@ class CommandConvert extends Command
         $this->bar->setBarWidth(70);
         $this->bar->setFormat(' [%bar%] %current%/%max% (%percent:3s%%) - %elapsed:6s%/%estimated:-6s% - %memory:6s%');
 
-        $this->bar->start();
+        $this->bar->start($steps);
     }
 
     /**
