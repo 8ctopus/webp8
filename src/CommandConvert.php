@@ -67,7 +67,6 @@ class CommandConvert extends Command
             return 127;
         }
 
-        // get directory argument
         $dir = $input->getArgument('directory');
 
         // convert to realpath
@@ -130,7 +129,7 @@ class CommandConvert extends Command
             }
 
             // convert single image to webp
-            if (self::convert($file, $stats, $multithreading, '', $q, $m, $z)) {
+            if ($this->convert($file, $stats, $multithreading, '', $q, $m, $z)) {
                 $this->io->writeln('Convert image - ' . $file, OutputInterface::VERBOSITY_VERBOSE);
             } else {
                 $this->io->error('Convert image - ' . $file);
@@ -153,8 +152,8 @@ class CommandConvert extends Command
 
         $compression = round($stats['size_src'] / ($stats['size_dest'] ? $stats['size_dest'] : 1), 1) . ' x';
 
-        $size_src = Helper::formatSize($stats['size_src'], 1);
-        $size_dest = Helper::formatSize($stats['size_dest'], 1);
+        $srcSize = Helper::formatSize($stats['size_src'], 1);
+        $destSize = Helper::formatSize($stats['size_dest'], 1);
 
         // create table
         $this->io->table([
@@ -174,8 +173,8 @@ class CommandConvert extends Command
                 $stats['skipped'],
                 $stats['webp_bigger'],
                 $time,
-                $size_src,
-                $size_dest,
+                $srcSize,
+                $destSize,
                 $compression,
                 $stats['webp_zero_size'],
             ],
@@ -252,11 +251,11 @@ class CommandConvert extends Command
         }
 
         // compare image sizes
-        $size_src = filesize($src);
-        $size_dest = filesize($dest);
+        $srcSize = filesize($src);
+        $destSize = filesize($dest);
 
-        $delta = $size_dest - $size_src;
-        $delta_per = round($delta * 100 / $size_src, 0);
+        $delta = $destSize - $srcSize;
+        $delta_per = round($delta * 100 / $srcSize, 0);
 
         if ($delta > 0) {
             // delete webp if bigger than original
@@ -265,11 +264,11 @@ class CommandConvert extends Command
             $this->io->writeln("<comment>webp image bigger than source - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_VERBOSE);
         } else {
             // save sizes
-            $stats['size_src'] += $size_src;
-            $stats['size_dest'] += $size_dest;
+            $stats['size_src'] += $srcSize;
+            $stats['size_dest'] += $destSize;
         }
 
-        if ($size_dest <= 0) {
+        if ($destSize <= 0) {
             // delete webp if file size zero
             unlink($dest);
             ++$stats['webp_zero_size'];
@@ -277,17 +276,17 @@ class CommandConvert extends Command
         }
 
         // elapsed time
-        $delta_time = hrtime(true) - $time;
-        $delta_time /= 1e+6;
-        $delta_time = Helper::formatTime($delta_time);
+        $deltaTime = hrtime(true) - $time;
+        $deltaTime /= 1e+6;
+        $deltaTime = Helper::formatTime($deltaTime);
 
         // format sizes
-        $size_src = Helper::formatSize($size_src, 0);
-        $size_dest = Helper::formatSize($size_dest, 0);
+        $srcSize = Helper::formatSize($srcSize, 0);
+        $destSize = Helper::formatSize($destSize, 0);
         $delta = Helper::formatSize($delta, 0);
 
         // log
-        $this->io->writeln("delta - {$delta_per}% / {$delta} - {$delta_time} - size src - {$size_src} - size dest - {$size_dest}", OutputInterface::VERBOSITY_VERBOSE);
+        $this->io->writeln("delta - {$delta_per}% / {$delta} - {$deltaTime} - size src - {$srcSize} - size dest - {$destSize}", OutputInterface::VERBOSITY_VERBOSE);
 
         return true;
     }
