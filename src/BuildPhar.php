@@ -3,7 +3,7 @@
 /**
  * Build phar
  *
- * @note php.ini setting phar.readonly must be set to false
+ * php.ini setting phar.readonly must be set to false
  * parts taken from composer compiler https://github.com/composer/composer/blob/master/src/Composer/Compiler.php
  */
 
@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$filename = __DIR__ . '/bin/webp8.phar';
+$filename = dirname(__DIR__) . '/bin/hstat.phar';
 
 // clean up before creating a new phar
 if (file_exists($filename)) {
@@ -45,7 +45,9 @@ $finder->files()
     ->ignoreVCS(true)
     ->name('*.php')
     ->notName('BuildPhar.php')
-    ->in(__DIR__ . '/src/');
+    ->in(__DIR__);
+
+echo "Add source files - " . count($finder) . "\n";
 
 foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
@@ -64,7 +66,9 @@ $finder->files()
     ->exclude('README.md')
     ->exclude('CHANGELOG.md')
     ->exclude('composer.json')
-    ->in(__DIR__ . '/../vendor/');
+    ->in(dirname(__DIR__) . '/vendor/');
+
+echo "Add vendor dependencies - " . count($finder) . "\n";
 
 foreach ($finder as $file) {
     $phar->addFile($file->getRealPath(), getRelativeFilePath($file));
@@ -97,7 +101,6 @@ Create phar - OK
 {$filename} - {$sha256}
 
 OUTPUT;
-
 
 /**
  * Get file relative path
