@@ -207,12 +207,11 @@ class CommandConvert extends Command
         // https://developers.google.com/speed/webp/docs/cwebp
         $options = '-quiet';
 
-        // Default "-m 6" as previously
+        // default "-m 6" as previously
         if ($q === null && $m === null && $z === null) {
             $options .= ' -m 6';
-        }
-        // New options available
-        else {
+        } else {
+            // new options available
             if ($q !== null) {
                 $options .= " -q {$q}";
             }
@@ -268,8 +267,8 @@ class CommandConvert extends Command
             $stats['size_dest'] += $destSize;
         }
 
+        // delete webp if file size zero
         if ($destSize <= 0) {
-            // delete webp if file size zero
             unlink($dest);
             ++$stats['webp_zero_size'];
             $this->io->writeln("<comment>webp image file size zero - deleted - {$dest}</comment>", OutputInterface::VERBOSITY_VERBOSE);
