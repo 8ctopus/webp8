@@ -6,16 +6,6 @@ namespace Oct8pus\Webp;
 
 class Helper
 {
-    public static $ext_jpg_png = [
-        'jpg',
-        'jpeg',
-        'png',
-    ];
-
-    public static $ext_webp = [
-        'webp',
-    ];
-
     /**
      * List directory files recursively
      *

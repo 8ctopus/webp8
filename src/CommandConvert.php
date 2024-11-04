@@ -82,7 +82,13 @@ class CommandConvert extends Command
         // list images to convert
         $files = [];
 
-        if (!Helper::listDirExtension($dir, Helper::$ext_jpg_png, $files)) {
+        $extensions = [
+            'jpg',
+            'jpeg',
+            'png',
+        ];
+
+        if (!Helper::listDirExtension($dir, $extensions, $files)) {
             $this->io->error('List images');
 
             return 1;

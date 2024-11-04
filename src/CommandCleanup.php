@@ -57,7 +57,7 @@ class CommandCleanup extends Command
         // list images to delete
         $files = [];
 
-        if (!Helper::listDirExtension($dir, Helper::$ext_webp, $files)) {
+        if (!Helper::listDirExtension($dir, ['.webp'], $files)) {
             $io->error('List images');
 
             return 1;
