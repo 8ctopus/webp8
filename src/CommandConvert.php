@@ -109,11 +109,11 @@ class CommandConvert extends Command
             // check if image was already converted
             if (file_exists($file . '.webp')) {
                 // compare files modification time
-                $src_modified = filemtime($file);
-                $dest_modified = filemtime($file . '.webp');
+                $srcModified = filemtime($file);
+                $destModified = filemtime($file . '.webp');
 
                 // if source image was modified after webp, it means the image was updated and therefore needs to be converted again
-                if ($src_modified < $dest_modified) {
+                if ($srcModified < $destModified) {
                     $this->io->writeln('Skip webp exists - ' . $file, OutputInterface::VERBOSITY_VERBOSE);
                     ++$stats['skipped'];
 
@@ -126,7 +126,7 @@ class CommandConvert extends Command
 
             // convert single image to webp
             if (self::convert($file, $stats, $multithreading, '', $q, $m, $z)) {
-                $this->io->writeln('Image converted - ' . $file, OutputInterface::VERBOSITY_VERBOSE);
+                $this->io->writeln('Convert image - ' . $file, OutputInterface::VERBOSITY_VERBOSE);
             } else {
                 $this->io->error('Convert image - ' . $file);
             }
