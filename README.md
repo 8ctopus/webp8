@@ -13,7 +13,6 @@ You have the choice between:
 - or build it yourself
 
 ```sh
-# download webp8
 curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.3/webp8.phar
 
 # check hash against the one published under releases
