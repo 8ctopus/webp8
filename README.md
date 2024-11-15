@@ -56,7 +56,7 @@ curl -LO https://github.com/8ctopus/webp8/releases/download/1.0.3/webp8.phar
 ------- ----------- --------- ------------- ------- --------------- -----------
 ```
 
-_NOTE_: converted images that are bigger in webp format are automatically deleted since the whole point is to get smaller images. You can see the bigger images in the `webp bigger` column.
+*NOTE*: converted images that are bigger in webp format are automatically deleted since the whole point is to get smaller images. You can see the bigger images in the `webp bigger` column.
 
 ## delete existing webp images
 
@@ -112,5 +112,3 @@ Header append "Vary" "Accept" env=ADDVARY
     git clean -xfd images
 
 # improvement ideas
-
-- add hint on how to install on windows
