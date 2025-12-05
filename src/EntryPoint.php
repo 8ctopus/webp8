@@ -11,7 +11,7 @@ $file = '/vendor/autoload.php';
 require file_exists(__DIR__ . $file) ? __DIR__ . $file : dirname(__DIR__) . $file;
 
 $app = new Application('webp8', '1.1.0');
-$app->add(new CommandConvert());
-$app->add(new CommandCleanup());
+$app->addCommand(new CommandConvert());
+$app->addCommand(new CommandCleanup());
 
 $app->run();
