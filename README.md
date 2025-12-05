@@ -13,7 +13,7 @@ You have the choice between:
 - or build it yourself
 
 ```sh
-curl -LO https://github.com/8ctopus/webp8/releases/download/1.1.0/webp8.phar
+curl -LO https://github.com/8ctopus/webp8/releases/download/1.2.0/webp8.phar
 
 # check hash against the one published under releases
 sha256sum webp8.phar
@@ -35,7 +35,7 @@ mv webp8 /usr/local/bin/
 - download webp8
 
 ```cmd
-curl -LO https://github.com/8ctopus/webp8/releases/download/1.1.0/webp8.phar
+curl -LO https://github.com/8ctopus/webp8/releases/download/1.2.0/webp8.phar
 ```
 
 - check hash against the one published under releases
