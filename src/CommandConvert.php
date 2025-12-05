@@ -190,13 +190,13 @@ class CommandConvert extends Command
      * @param  [in, out] array $stats
      * @param bool   $multithreading
      * @param string $dest
-     * @param int    $q              cwebp -q
-     * @param int    $m              cwebp -m
-     * @param int    $z              cwebp -z
+     * @param ?int    $q              cwebp -q
+     * @param ?int    $m              cwebp -m
+     * @param ?int    $z              cwebp -z
      *
      * @return bool true on success, otherwise false
      */
-    private function convert(string $src, array &$stats, bool $multithreading, string $dest = '', int $q = null, int $m = null, int $z = null) : bool
+    private function convert(string $src, array &$stats, bool $multithreading, string $dest = '', ?int $q = null, ?int $m = null, ?int $z = null) : bool
     {
         // create destination file
         if (empty($dest)) {
