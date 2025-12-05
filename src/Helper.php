@@ -59,15 +59,11 @@ class Helper
      */
     public static function listDirExtension(string $dir, array $extensions) : array
     {
-        // list all files recursively
         $files = self::listDir($dir);
 
-        // filter to extension
         $files = array_filter($files, function ($file) use ($extensions) {
-            // get file extension
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
-            // check if extension in array
             return in_array($ext, $extensions, true);
         });
 

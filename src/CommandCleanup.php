@@ -42,10 +42,8 @@ class CommandCleanup extends Command
         // beautify input, output interface
         $io = new SymfonyStyle($input, $output);
 
-        // get directory argument
         $dir = $input->getArgument('directory');
 
-        // convert to realpath
         $dir = realpath($dir);
 
         if (!$dir) {
@@ -54,24 +52,18 @@ class CommandCleanup extends Command
             return 1;
         }
 
-        // list images to delete
         $files = [];
 
         $files = Helper::listDirExtension($dir, ['.webp']);
 
         $count = count($files);
 
-        // check if any images to delete
         if (!$count) {
             $io->success('It\'s already clean');
 
             return 0;
         }
 
-        // delete images
-        //$io->writeln('Delete images... - '. $count, OutputInterface::VERBOSITY_VERBOSE);
-
-        // ask user confirmation if not dry run
         if (!$input->getOption('dry-run') && !$io->confirm("sure you want to delete {$count} webp images?", false)) {
             $io->warning('Abort');
 
@@ -80,14 +72,12 @@ class CommandCleanup extends Command
 
         foreach ($files as $file) {
             if (!$input->getOption('dry-run')) {
-                // delete file
                 unlink($file);
             }
 
             $io->writeln("Deleted {$file}", OutputInterface::VERBOSITY_VERBOSE);
         }
 
-        // log success
         $io->success('');
 
         return 0;
