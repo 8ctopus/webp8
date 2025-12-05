@@ -2,6 +2,9 @@
 /composer.lock
 /vendor/
 
+# binary
+/bin/
+
 # other
 /*.sublime-workspace
 /.php-cs-fixer.cache
