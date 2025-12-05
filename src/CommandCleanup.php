@@ -54,7 +54,7 @@ class CommandCleanup extends Command
 
         $files = [];
 
-        $files = Helper::listDirExtension($dir, ['.webp']);
+        $files = Helper::listDirExtension($dir, ['webp']);
 
         $count = count($files);
 
