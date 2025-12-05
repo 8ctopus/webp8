@@ -111,4 +111,4 @@ Header append "Vary" "Accept" env=ADDVARY
     # cleanup test dir
     git clean -xfd images
 
-# improvement ideas
+## improvement ideas
