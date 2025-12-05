@@ -100,9 +100,10 @@ Header append "Vary" "Accept" env=ADDVARY
 
 ## for development
 
-### build phar
+### build bin
 
-    ./build.sh
+- bump version
+- run `./build.sh`
 
 ### debug code
 
